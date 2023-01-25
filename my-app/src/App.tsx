@@ -3,6 +3,7 @@ import UsersList from "./components/UsersList";
 
 import { User } from "./model/user";
 
+//TODO:: dodać jakieś style, zaciągnąć bootstrapa czy coś
 function App() {
   const [usersData, setUsersData] = useState<User[]>([]);
   const [iteration, setIteration] = useState<number>(1);
@@ -21,7 +22,6 @@ function App() {
     );
 
     if (!response.ok) {
-      setUsersData([]);
       return;
     }
 
