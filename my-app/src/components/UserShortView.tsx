@@ -1,7 +1,5 @@
 import React from "react";
 
-import classes from "./UserShortView.module.css";
-
 const UserShortView: React.FC<{
   userName: string;
   userLastName: string;
