@@ -8,7 +8,7 @@ const UserFullView: React.FC<{
   const fullName = `${userData.userName} ${userData.userLastName}`;
 
   return (
-    <div onClick={toggleView}>
+    <li onClick={toggleView}>
       <div className="image">
         <img src={userData.image.large} alt={userData.userName} />
       </div>
@@ -29,7 +29,7 @@ const UserFullView: React.FC<{
           <span>{userData.registrationTime}</span>
         </div>
       </div>
-    </div>
+    </li>
   );
 };
 

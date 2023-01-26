@@ -3,7 +3,6 @@ import UsersList from "./components/UsersList";
 
 import { User } from "./model/user";
 
-//TODO:: dodać jakieś style, zaciągnąć bootstrapa czy coś
 function App() {
   const [usersData, setUsersData] = useState<User[]>([]);
   const [iteration, setIteration] = useState<number>(1);
@@ -26,7 +25,7 @@ function App() {
     }
 
     const resData = await response.json();
-    const newUsersDataArray: User[] = [...usersData];
+    const newUsersDataArray: User[] = [];
 
     const formatDate = (date: string): string => {
       const newDate = new Date(date);
@@ -53,10 +52,10 @@ function App() {
         registrationTime: formatDate(data.registered.date),
       });
     }
-    console.log("asdzxc");
-    setUsersData(newUsersDataArray);
-    //Tylko, że wtedy mam tutaj nie do końca związany ze sztuka wynik, bo robie reset na iteration
-    //a brak mi usersData meh
+
+    setUsersData((prevUsersData: User[]) => {
+      return [...prevUsersData, ...newUsersDataArray];
+    });
   }, [iteration]);
 
   useEffect(() => {

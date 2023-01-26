@@ -1,5 +1,7 @@
 import React from "react";
 
+import classes from "./UserShortView.module.css";
+
 const UserShortView: React.FC<{
   userName: string;
   userLastName: string;
@@ -10,13 +12,15 @@ const UserShortView: React.FC<{
   const fullName = `${userName} ${userLastName}`;
 
   return (
-    <div onClick={toggleView}>
-      <div className="image">
-        <img src={imageUrl} alt={userName} />
+    <li onClick={toggleView}>
+      <div>
+        <div>
+          <img src={imageUrl} alt={userName} />
+        </div>
+        <div>{fullName}</div>
+        <div>{email}</div>
       </div>
-      <div className="name">{fullName}</div>
-      <div className="email">{email}</div>
-    </div>
+    </li>
   );
 };
 
