@@ -4,7 +4,10 @@ import { User } from "../model/user";
 import UserShortView from "./UserShortView";
 import UserFullView from "./UserFullView";
 
-const UserItem: React.FC<{ userData: User }> = ({ userData }) => {
+const UserItem: React.FC<{
+  userData: User;
+  verifyUser: (email: string) => void;
+}> = ({ userData, verifyUser }) => {
   const [view, setToggleView] = useState<boolean>(false);
 
   const toggleView = () => {
@@ -20,10 +23,15 @@ const UserItem: React.FC<{ userData: User }> = ({ userData }) => {
           userLastName={userData.userLastName}
           email={userData.email}
           imageUrl={userData.image.small}
+          verified={userData.verified}
           toggleView={toggleView}
         />
       ) : (
-        <UserFullView userData={userData} toggleView={toggleView} />
+        <UserFullView
+          userData={userData}
+          toggleView={toggleView}
+          verifyUser={verifyUser}
+        />
       )}
     </Fragment>
   );

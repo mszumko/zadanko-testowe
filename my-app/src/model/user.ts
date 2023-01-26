@@ -3,6 +3,7 @@ export interface User {
   userName: string;
   userLastName: string;
   email: string;
+  verified: boolean;
   image: {
     small?: string;
     medium?: string;

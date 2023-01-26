@@ -7,8 +7,9 @@ const UserShortView: React.FC<{
   userLastName: string;
   imageUrl?: string;
   email: string;
+  verified: boolean;
   toggleView: () => void;
-}> = ({ userName, userLastName, imageUrl, email, toggleView }) => {
+}> = ({ userName, userLastName, imageUrl, email, verified, toggleView }) => {
   const fullName = `${userName} ${userLastName}`;
 
   return (
@@ -16,6 +17,7 @@ const UserShortView: React.FC<{
       <div>
         <div>
           <img src={imageUrl} alt={userName} />
+          {verified && <span>Verified!</span>}
         </div>
         <div>{fullName}</div>
         <div>{email}</div>
