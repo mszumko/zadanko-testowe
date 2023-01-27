@@ -10,11 +10,16 @@ function App() {
   const fetchUsersData = useCallback(async () => {
     // To jest tak głupie ale niby działa ale jestem pewny, że nie działa, lepiej już pewnie by było pobierać sobie 5 nowych
     // i na koniec merge robic z nowa tabelka i setować nowa tableke xD.
-    const results = 5 * iteration;
+    // const results = 5 * iteration;
+    // const response = await fetch(
+    //   `https://randomuser.me/api/?results=${results}&seed=testUsers`
+    // );
+
     const response = await fetch(
-      `https://randomuser.me/api/?results=${results}&seed=testUsers`
+      `https://randomuser.me/api/?results=5&seed=${iteration}`
     );
 
+    //Tutaj jakiś info błędu było by ok dodać wiem.
     if (!response.ok) {
       return;
     }
@@ -26,7 +31,8 @@ function App() {
       const newDate = new Date(date);
       return `${newDate.getDay()}-${newDate.getMonth()}-${newDate.getFullYear()} ${newDate.getHours()}:${newDate.getSeconds()}`;
     };
-
+    //Bardzo chciałem zrobić na 1 kluczu zweryfikowanych userów, z tego co wiem local storage przyjmuje stringi więc
+    //Sobie je dziele
     const storageData: string | null =
       window.localStorage.getItem("verifuedUsers");
     const verifiedUsers = storageData ? storageData.split(",") : [];
@@ -38,6 +44,7 @@ function App() {
         userName: data.name.first,
         userLastName: data.name.last,
         email: data.email,
+        //A veryfikacje sprawdzam po mailu
         verified: verifiedUsers.includes(data.email),
         image: {
           small: data.picture.thumbnail,
@@ -52,7 +59,9 @@ function App() {
         registrationTime: formatDate(data.registered.date),
       });
     }
-    setUsersData(newUsersDataArray);
+    setUsersData((prevUsersData) => {
+      return [...prevUsersData, ...newUsersDataArray];
+    });
   }, [iteration]);
 
   useEffect(() => {
@@ -63,7 +72,7 @@ function App() {
     setIteration(iteration + 1);
   };
 
-  //Słabe rozwiązanie bo sobie zrobiłem drzewko z propsami,
+  //Średnie rozwiązanie bo sobie zrobiłem drzewko z propsami,
   // lepiej by było przenieść ogólnie wszysto do contexu/reduxa abny pozbyć się drzewka propsów?
   const verifyUser = (email: string) => {
     const localStorage = window.localStorage;
@@ -77,7 +86,23 @@ function App() {
         localStorage.setItem("verifuedUsers", newVerifiedUserList);
       }
     }
-    fetchUsersData();
+
+    // Żeby od razu dla naszego zweryfikowanego usera zmieniało info, że jest verified
+    const existingUserIndex = usersData.findIndex((item) => {
+      return item.email === email;
+    });
+    const existingUser = usersData[existingUserIndex];
+
+    let updatedUsers = [];
+    if (existingUser) {
+      const updatedUser = {
+        ...existingUser,
+        verified: true,
+      };
+      updatedUsers = [...usersData];
+      updatedUsers[existingUserIndex] = updatedUser;
+      setUsersData(updatedUsers);
+    }
   };
 
   return (

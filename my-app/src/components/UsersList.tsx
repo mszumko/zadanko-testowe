@@ -17,7 +17,8 @@ const UsersList: React.FC<{
       <UserItem key={userData.id} userData={userData} verifyUser={verifyUser} />
     );
   });
-
+  //Jak sądzisz, jakieś info isLoading by było warto dodać do ładowania, tutaj mi się wydaje, żę dość szybko działa więc chyba ok?
+  // Ale w normalnym projekcie, wiadomo, Loadin... label np. dodać must be :)
   return (
     <Card className={classes["users"]}>
       <ul>{usersList}</ul>

@@ -12,7 +12,7 @@ const UserFullView: React.FC<{
   const button = (
     <Button onClick={verifyUser.bind(null, userData.email)}>Verify</Button>
   );
-  console.log(userData.verified);
+
   return (
     <li>
       <div className="userInformation" onClick={toggleView}>
